@@ -5,7 +5,7 @@ import android.hardware.ConsumerIrManager
 import kotlin.math.roundToInt
 
 
-enum class CodeFormat { PRONTO, RAW, NEC, RC5 }
+enum class CodeFormat { PRONTO, RAW, NEC, RC5, SAMSUNG, RC6 }
 
 data class EncodedIr(
     val carrierHz: Int,

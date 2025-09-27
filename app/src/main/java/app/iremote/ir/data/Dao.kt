@@ -25,6 +25,9 @@ interface KeyDao {
     @Query("SELECT * FROM keys WHERE profileId=:profileId ORDER BY id")
     fun keysFor(profileId: Long): Flow<List<RemoteKeyEntity>>
 
+    @Query("SELECT * FROM keys WHERE id=:id")
+    suspend fun byId(id: Long): RemoteKeyEntity?
+
     @Insert suspend fun insert(key: RemoteKeyEntity): Long
     @Update suspend fun update(key: RemoteKeyEntity)
     @Delete suspend fun delete(key: RemoteKeyEntity)

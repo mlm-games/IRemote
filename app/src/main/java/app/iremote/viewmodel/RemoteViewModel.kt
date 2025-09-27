@@ -3,9 +3,9 @@ package app.iremote.ir.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.iremote.data.repository.SettingsRepository
+import app.iremote.ir.data.IrRepository
 import app.iremote.ir.data.RemoteKeyEntity
 import app.iremote.ir.data.RemoteWithKeys
-import app.iremote.ir.repo.IrRepository
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 

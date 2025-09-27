@@ -22,7 +22,7 @@ import app.iremote.data.repository.AppSettings
 import app.iremote.ui.EditRemoteScreen
 import app.iremote.ui.RemoteListScreen
 import app.iremote.ui.RemoteScreen
-import app.iremote.ir.viewmodel.RemoteListViewModel
+import app.iremote.viewmodel.RemoteListViewModel
 import app.iremote.ir.viewmodel.RemoteViewModel
 import app.iremote.ui.screens.SettingsScreen
 import app.iremote.ui.theme.MainTheme

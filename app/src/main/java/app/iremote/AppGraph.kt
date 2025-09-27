@@ -5,7 +5,7 @@ import app.iremote.data.repository.SettingsRepository
 import app.iremote.ir.data.IrDatabase
 import app.iremote.ir.AndroidInfraredTransmitter
 import app.iremote.ir.InfraredTransmitter
-import app.iremote.ir.repo.IrRepository
+import app.iremote.ir.data.IrRepository
 
 object AppGraph {
     @Volatile private var instance: Instance? = null

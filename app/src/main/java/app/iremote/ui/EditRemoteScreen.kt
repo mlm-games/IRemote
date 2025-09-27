@@ -13,11 +13,12 @@ import androidx.compose.ui.unit.dp
 import app.iremote.ir.data.RemoteKeyEntity
 import app.iremote.ir.data.RemoteProfileEntity
 import app.iremote.ir.CodeFormat
-import app.iremote.ir.repo.IrRepository
+import app.iremote.ir.data.IrRepository
 import app.iremote.ui.components.AppTopBar
 import app.iremote.ui.dialogs.InputDialog
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
+import kotlin.math.exp
 
 @Composable
 fun EditRemoteScreen(
@@ -102,7 +103,7 @@ fun EditRemoteScreen(
                 val entity = when (fmt) {
                     CodeFormat.PRONTO -> RemoteKeyEntity(profileId = rId, name = label, format = fmt, payload = payload)
                     CodeFormat.RAW -> RemoteKeyEntity(profileId = rId, name = label, format = fmt, carrierHz = freq, patternMicros = pattern)
-                    CodeFormat.NEC, CodeFormat.RC5 -> RemoteKeyEntity(profileId = rId, name = label, format = fmt, payload = payload)
+                    CodeFormat.NEC, CodeFormat.RC5, CodeFormat.SAMSUNG, CodeFormat.RC6  -> RemoteKeyEntity(profileId = rId, name = label, format = fmt, payload = payload)
                 }
                 scope.launch { repo.saveKey(entity); showAddKey = false }
             }
@@ -148,30 +149,39 @@ private fun AddKeyDialog(
         onDismissRequest = onDismiss,
         title = { Text("Add Key") },
         text = {
+            var expanded by remember {mutableStateOf(false) }
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 OutlinedTextField(value = name, onValueChange = { name = it }, label = { Text("Label") }, modifier = Modifier.fillMaxWidth())
 
                 // Simple format selector
-                ExposedDropdownMenuBox(expanded = false, onExpandedChange = {}) {
+                ExposedDropdownMenuBox(expanded = expanded, onExpandedChange = { expanded = it }) {
                     OutlinedTextField(
                         readOnly = true,
                         value = fmt.name,
                         onValueChange = {},
                         label = { Text("Format") },
-                        trailingIcon = {},
-                        modifier = Modifier.fillMaxWidth()
+                        trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
+                        colors = ExposedDropdownMenuDefaults.textFieldColors(),
+                        modifier = Modifier.fillMaxWidth().menuAnchor(MenuAnchorType.PrimaryNotEditable)
                     )
-                }
-                // Toggle fmt quickly for demo; in real UI use a dropdown
-                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    for (f in CodeFormat.values()) {
-                        FilterChip(selected = fmt == f, onClick = { fmt = f }, label = { Text(f.name) })
+                    ExposedDropdownMenu( expanded = expanded,
+                        onDismissRequest = { expanded = false }) {
+                        CodeFormat.entries.forEach { f ->
+                            DropdownMenuItem(
+                                text = { Text(f.name, style = MaterialTheme.typography.bodyLarge) },
+                                onClick = {
+                                    expanded = false
+                                    fmt = f
+                                },
+                                contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
+                            )
+                        }
                     }
                 }
 
                 when (fmt) {
                     CodeFormat.PRONTO -> OutlinedTextField(value = payload, onValueChange = { payload = it }, label = { Text("Pronto hex") }, modifier = Modifier.fillMaxWidth())
-                    CodeFormat.NEC, CodeFormat.RC5 -> OutlinedTextField(value = payload, onValueChange = { payload = it }, label = { Text("addr:cmd (hex)") }, modifier = Modifier.fillMaxWidth())
+                    CodeFormat.NEC, CodeFormat.RC5, CodeFormat.RC6, CodeFormat.SAMSUNG -> OutlinedTextField(value = payload, onValueChange = { payload = it }, label = { Text("addr:cmd (hex)") }, modifier = Modifier.fillMaxWidth())
                     CodeFormat.RAW -> {
                         OutlinedTextField(value = carrier, onValueChange = { carrier = it }, label = { Text("Carrier Hz") }, modifier = Modifier.fillMaxWidth())
                         OutlinedTextField(value = raw, onValueChange = { raw = it }, label = { Text("Pattern (us, comma)") }, modifier = Modifier.fillMaxWidth())
@@ -182,7 +192,7 @@ private fun AddKeyDialog(
         confirmButton = {
             TextButton(onClick = {
                 when (fmt) {
-                    CodeFormat.PRONTO, CodeFormat.NEC, CodeFormat.RC5 -> onCreate(name, fmt, payload.trim(), null, null)
+                    CodeFormat.PRONTO, CodeFormat.NEC, CodeFormat.RC5, CodeFormat.SAMSUNG, CodeFormat.RC6 -> onCreate(name, fmt, payload.trim(), null, null)
                     CodeFormat.RAW -> onCreate(name, fmt, null, carrier.toIntOrNull(), raw.split(",").mapNotNull { it.trim().toIntOrNull() })
                 }
             }) { Text("Add") }

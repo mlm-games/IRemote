@@ -1,10 +1,10 @@
-package app.iremote.ir.viewmodel
+package app.iremote.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.iremote.data.repository.SettingsRepository
+import app.iremote.ir.data.IrRepository
 import app.iremote.ir.data.RemoteProfileEntity
-import app.iremote.ir.repo.IrRepository
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
