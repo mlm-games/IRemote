@@ -1,2 +1,0 @@
-- Change icon
-- Update android.yml to set alpha as default

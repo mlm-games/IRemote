@@ -1,9 +1,1 @@
-Ape is a lightweight file manager for phones, tablets, and Android TV.
-
-- Browse internal storage or any SAF folder
-- Create and extract archives: ZIP, 7z, TAR, TGZ, TBZ2, TXZ, APK/JAR
-- Encrypted archives: ZIP (AES) and 7z
-- Background tasks with progress and a Task Center
-- Open archives like folders, or extract selected items
-- TV-friendly UI with DPAD focus and big targets
-- Works without network. No ads, no trackers.
+An IR remote app inspired by the now archived IR-Remote (by divested group)

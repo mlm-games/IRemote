@@ -1,1 +1,1 @@
-A TV friendly file manager and archive viewer
+Configurable IR Remote
