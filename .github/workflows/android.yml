@@ -2,23 +2,23 @@ name: Android App Releases
 
 on:
   schedule:
-    - cron: '0 0 1 */2 *'  # Every other month on the 1st
-  workflow_dispatch: 
+    - cron: "0 0 1 */2 *" # Every other month on the 1st
+  workflow_dispatch:
     inputs:
       upload_releases:
-        description: 'Upload releases'
+        description: "Upload releases"
         required: true
-        default: 'true'
+        default: "true"
         type: boolean
       mark_prerelease:
-        description: 'Mark as prerelease'
+        description: "Mark as prerelease"
         required: true
-        default: 'false'
+        default: "false"
         type: boolean
       play_track:
-        description: 'Google Play track (internal, alpha, beta, production)'
+        description: "Google Play track (internal, alpha, beta, production)"
         required: true
-        default: 'alpha'
+        default: "alpha"
         type: choice
         options: [internal, alpha, beta, production]
 
@@ -27,13 +27,13 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  APP_NAME: 'Ape'      
-  APP_SLUG: 'ape'     
-  APPLICATION_ID: 'app.ape'
+  APP_NAME: "IRemote"
+  APP_SLUG: "iremote"
+  APPLICATION_ID: "app.iremote"
 
-  JAVA_VERSION: '21'
-  JAVA_DISTRIBUTION: 'corretto'
-  BUILD_GRADLE_PATH: 'app/build.gradle.kts'
+  JAVA_VERSION: "21"
+  JAVA_DISTRIBUTION: "corretto"
+  BUILD_GRADLE_PATH: "app/build.gradle.kts"
 
 jobs:
   prepare-version:
@@ -52,26 +52,26 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           fetch-depth: 0
-      
+
       - name: Set up Java
         uses: actions/setup-java@v5
         with:
           java-version: ${{ env.JAVA_VERSION }}
           distribution: ${{ env.JAVA_DISTRIBUTION }}
-      
+
       - id: version
         name: Update Version Numbers
         run: |
           OLD_VERSION_CODE=$(grep "versionCode" $BUILD_GRADLE_PATH | head -1 | grep -oE '[0-9]+')
           OLD_VERSION_NAME=$(grep "versionName" $BUILD_GRADLE_PATH | head -1 | grep -oE '"([^"]+)"' | tr -d '"')
-          
+
           NEW_VERSION_CODE=$((OLD_VERSION_CODE + 10))
-          
+
           IFS='.' read -ra VERSION_PARTS <<< "$OLD_VERSION_NAME"
           MINOR=$((VERSION_PARTS[2] + 1))
           VERSION_PARTS[2]=$MINOR
           NEW_VERSION_NAME="${VERSION_PARTS[0]}.${VERSION_PARTS[1]}.${VERSION_PARTS[2]}"
-          
+
           BUILD_DATE=$(date +'%Y%m%d')
 
           echo "old_version_name=$OLD_VERSION_NAME" >> $GITHUB_OUTPUT
@@ -88,12 +88,12 @@ jobs:
         uses: mlm-games/release-notes-generator@main
         with:
           version: ${{ steps.version.outputs.version_name }}
-          changelog-path: 'CHANGELOG.md'
-          version-file-path: './fastlane/metadata/android/en-US/changelogs/${{ steps.version.outputs.version_code }}.txt'
-          version-code: '${{ steps.version.outputs.version_code }}'
-          format: '- {{subject}}'
-          exclude-patterns: 'chore:,ci:,docs:,build:,Bump version,Merge pull request,[skip ci]'
-          auto-commit: 'false'
+          changelog-path: "CHANGELOG.md"
+          version-file-path: "./fastlane/metadata/android/en-US/changelogs/${{ steps.version.outputs.version_code }}.txt"
+          version-code: "${{ steps.version.outputs.version_code }}"
+          format: "- {{subject}}"
+          exclude-patterns: "chore:,ci:,docs:,build:,Bump version,Merge pull request,[skip ci]"
+          auto-commit: "false"
 
       - name: Commit Changes
         id: commit-and-push
@@ -110,22 +110,22 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-    
+
     steps:
       - uses: actions/checkout@v5
         with:
           ref: ${{ needs.prepare-version.outputs.commit_sha }}
-      
+
       - name: Set up Java
         uses: actions/setup-java@v5
         with:
           java-version: ${{ env.JAVA_VERSION }}
           distribution: ${{ env.JAVA_DISTRIBUTION }}
-          cache: 'gradle'
-          
+          cache: "gradle"
+
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
-          
+
       - name: Decode Keystore
         run: |
           echo "${{ secrets.KEYSTORE }}" > release.keystore.asc
@@ -138,13 +138,13 @@ jobs:
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
         run: ./gradlew :app:bundleRelease -PenableApkSplits=false
-      
+
       - name: Prepare AAB artifact
         run: |
           mkdir -p artifacts
           cp app/build/outputs/bundle/release/app-release.aab \
              "artifacts/${{ env.APP_SLUG }}-${{ needs.prepare-version.outputs.version_name }}.aab"
-      
+
       - name: Upload AAB to Google Play
         if: github.event_name == 'workflow_dispatch' && inputs.upload_releases == true
         uses: r0adkll/upload-google-play@v1
@@ -155,10 +155,10 @@ jobs:
           track: ${{ inputs.play_track }}
           status: completed
           whatsNewDirectory: fastlane/metadata/android
-      
+
       - name: Clean before APK build
         run: ./gradlew clean
-      
+
       - name: Build APK splits
         env:
           KEYSTORE_PATH: ${{ github.workspace }}/release.keystore
@@ -166,7 +166,7 @@ jobs:
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
         run: ./gradlew :app:assembleRelease -PenableApkSplits=true -PincludeUniversalApk=true
-          
+
       - name: Prepare APKs
         run: |
           mkdir -p artifacts
@@ -178,7 +178,7 @@ jobs:
               fi
             fi
           done
-  
+
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         if: inputs.upload_releases == false || github.event_name != 'workflow_dispatch'

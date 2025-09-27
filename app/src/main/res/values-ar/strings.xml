@@ -17,18 +17,18 @@
     <string name="okay">تمام</string>
     <string name="cool">رائع!</string>
     <string name="tip_start_typing_for_rename">نصيحة: ابدأ الكتابة لخيار التطبيق RENAME</string>
-    <string name="change_to_your_preferred_wallpaper_in_settings">سيتم تحديث ورق الحائط الخاص بك قريبًا</string>
-    <string name="ape_is_not_default_launcher">Ape ليس المشغل الافتراضي. قد يفشل التحديث اليومي للخلفية.</string>
+    <string name="change_to_your_preferred_wallpiremoter_in_settings">سيتم تحديث ورق الحائط الخاص بك قريبًا</string>
+    <string name="iremote_is_not_default_launcher">IRemote ليس المشغل الافتراضي. قد يفشل التحديث اليومي للخلفية.</string>
     <string name="long_press_to_enable">اضغط لفترة طويلة للتمكين</string>
     <string name="no_hidden_apps">لا توجد تطبيقات مخفية</string>
     <string name="hidden_apps">تطبيقات مخفية</string>
     <string name="swipe_left_app_disabled">انتقاد اليسار تعطيل التطبيق</string>
     <string name="swipe_right_app_disabled">انتقاد الحق التطبيق تعطيل</string>
-    <string name="hidden_apps_message">ملاحظة: اضغط على \"Ape\" أعلى صفحة الإعدادات هذه للعثور على تطبيقاتك المخفية.  المزيد من التفاصيل متوفرة في صفحة \"حول\" أدناه.</string>
+    <string name="hidden_apps_message">ملاحظة: اضغط على \"IRemote\" أعلى صفحة الإعدادات هذه للعثور على تطبيقاتك المخفية.  المزيد من التفاصيل متوفرة في صفحة \"حول\" أدناه.</string>
     <string name="swipe_down_for">اسحب لأسفل من أجل</string>
     <string name="search">يبحث</string>
     <string name="notifications">إشعارات</string>
-    <string name="accessibility_disclosure">يرجى تشغيل أو إيقاف تشغيل خدمة الوصول في Ape في إعدادات جهازك لتمكين هذه الميزة أو تعطيلها.       يرجى ملاحظة أن هذه الخدمة تُستخدم فقط للسماح لك بإيقاف تشغيل شاشة جهازك باستخدام إيماءة النقر المزدوج. خدمة الوصول لدينا لا تجمع أو تشارك أي بيانات.</string>
+    <string name="accessibility_disclosure">يرجى تشغيل أو إيقاف تشغيل خدمة الوصول في IRemote في إعدادات جهازك لتمكين هذه الميزة أو تعطيلها.       يرجى ملاحظة أن هذه الخدمة تُستخدم فقط للسماح لك بإيقاف تشغيل شاشة جهازك باستخدام إيماءة النقر المزدوج. خدمة الوصول لدينا لا تجمع أو تشارك أي بيانات.</string>
     <string name="accept">يقبل</string>
     <string name="permission">إذن</string>
     <string name="double_tap_lock">انقر نقرًا مزدوجًا للقفل</string>
@@ -41,7 +41,7 @@
     <string name="enabled">ممكن</string>
     <string name="disabled">عاجز</string>
     <string name="please_turn_on_double_tap_to_unlock">يرجى تشغيل النقر المزدوج للقفل</string>
-    <string name="launcher_failed_to_lock_device">فشل Ape في قفل الجهاز. يرجى التحقق من إعدادات التطبيق الخاص بك.</string>
+    <string name="launcher_failed_to_lock_device">فشل IRemote في قفل الجهاز. يرجى التحقق من إعدادات التطبيق الخاص بك.</string>
     <string name="long_press_to_select_app">اضغط لفترة طويلة لتحديد التطبيق</string>
     <string name="unable_to_open_app">تعذر فتح معلومات التطبيق</string>
     <string name="copied">نسخ</string>
@@ -51,7 +51,7 @@
     <string name="adapter_hide">يخفي</string>
     <string name="app_text_color">لون الخط</string>
     <string name="double_tap_to_lock_screen">انقر نقرًا مزدوجًا للقفل</string>
-    <string name="admin_permission_message">يعد Ape باستخدام إذن قفل الشاشة بشكل مسؤول. لا يقوم Ape بجمع أو مشاركة أي بيانات.</string>
+    <string name="admin_permission_message">يعد IRemote باستخدام إذن قفل الشاشة بشكل مسؤول. لا يقوم IRemote بجمع أو مشاركة أي بيانات.</string>
     <string name="about">عن</string>
     <string name="off">عن</string>
     <string name="on">على</string>
@@ -85,24 +85,24 @@
     <string name="system_default">نظام</string>
     <string name="dark">مظلم</string>
     <string name="light">ضوء</string>
-    <string name="welcome_to_ape_settings">مرحبًا بك في الإعدادات!\n\nتذكر، إذا كان لديك أي سؤال، فإن صفحة "حول" لدينا تحتوي على الإجابة.</string>
+    <string name="welcome_to_iremote_settings">مرحبًا بك في الإعدادات!\n\nتذكر، إذا كان لديك أي سؤال، فإن صفحة "حول" لدينا تحتوي على الإجابة.</string>
     <string name="rate_us_message">مرحبًا ، لن ترى هذه الرسالة مرة أخرى.
-        \n\nإذا كنت تحب Ape ، فهل يمكنك أن تعطينا تصنيف 5 نجوم؟ يساعدنا ذلك على تحسين تصنيفنا ويجعلنا سعداء. شكرًا لك!</string>
+        \n\nإذا كنت تحب IRemote ، فهل يمكنك أن تعطينا تصنيف 5 نجوم؟ يساعدنا ذلك على تحسين تصنيفنا ويجعلنا سعداء. شكرًا لك!</string>
     <string name="share_message">مرحبا، نحن بحاجة لمساعدتكم! في العام الماضي تجاوزنا مليون عملية تنزيل. نريد هذا العام أن نصل إلى مليون آخرين ولكن لا يمكننا القيام بذلك بمفردنا.
-        \n\nهل تتفضل بمشاركة Ape مع أصدقائك، من فضلك؟ شكرا لك، ويوم رائع!</string>
-    <string name="keyboard_message">مرحبًا ، لوحة المفاتيح هي أسرع طريقة للعثور على التطبيقات وتشغيلها في Ape. هل يمكننا أن نطلب منك الاحتفاظ بهذا الأمر لبضعة أيام أخرى ثم اتخاذ القرار؟ الاختيار دائما لك.</string>
+        \n\nهل تتفضل بمشاركة IRemote مع أصدقائك، من فضلك؟ شكرا لك، ويوم رائع!</string>
+    <string name="keyboard_message">مرحبًا ، لوحة المفاتيح هي أسرع طريقة للعثور على التطبيقات وتشغيلها في IRemote. هل يمكننا أن نطلب منك الاحتفاظ بهذا الأمر لبضعة أيام أخرى ثم اتخاذ القرار؟ الاختيار دائما لك.</string>
     <string name="digital_wellbeing_message">إذا كنت تريد تعيين حدود زمنية لتطبيقات معينة، فيمكن أن تساعدك ميزة الرفاهية الرقمية في Android على القيام بذلك.
         \n\nيرجى البحث عن الرفاهية الرقمية في إعدادات هاتفك وتمكينها.</string>
     <string name="app_usage_message">لعرض/إخفاء وقت استخدام الشاشة على الشاشة الرئيسية، يرجى السماح أو منع إذن استخدام التطبيق.
         \n\nملاحظة: لا يتم جمع أي بيانات حول استخدام التطبيقات. يتم معالجة كل شيء على جهازك.</string>
-    <string name="accessibility_service_description">إذن الوصول مطلوب لتمكين النقر المزدوج للقفل. أي بيانات حصل عليها Ape عبر هذه الخدمة لن تترك جهازك.</string>
-    <string name="support_ape_for_free">ادعم Ape مجانًا باستخدام رابط الشراكة التابع لشركة Amazon.</string>
-    <string name="support_ape_message">في كل مرة تشتري شيئًا باستخدام الرابط الخاص بنا ، نحصل على عمولة صغيرة. يرجى حفظ الرابط واستخدامه في أي وقت تتسوق فيه عبر الإنترنت. شكرًا لك!</string>
+    <string name="accessibility_service_description">إذن الوصول مطلوب لتمكين النقر المزدوج للقفل. أي بيانات حصل عليها IRemote عبر هذه الخدمة لن تترك جهازك.</string>
+    <string name="support_iremote_for_free">ادعم IRemote مجانًا باستخدام رابط الشراكة التابع لشركة Amazon.</string>
+    <string name="support_iremote_message">في كل مرة تشتري شيئًا باستخدام الرابط الخاص بنا ، نحصل على عمولة صغيرة. يرجى حفظ الرابط واستخدامه في أي وقت تتسوق فيه عبر الإنترنت. شكرًا لك!</string>
     <string name="open">افتح الرابط</string>
     <string name="copy">ينسخ</string>
     <string name="close">يغلق</string>
     <string name="not_now">ليس الآن</string>
-    <string name="public_roadmap">خارطة طريق Ape العامة</string>
+    <string name="public_roadmap">خارطة طريق IRemote العامة</string>
     <string name="instagram">انستغرام</string>
     <string name="twitter">تويتر</string>
     <string name="roadmap">خريطة الطريق</string>
@@ -110,7 +110,7 @@
     <string name="date_only">التاريخ فقط</string>
     <string name="bottom_on">القاع: تشغيل</string>
     <string name="bottom_off">القاع: إيقاف</string>
-    <string name="please_set_ape_as_default_first">يرجى تعيين Ape كمشغل افتراضي أولاً</string>
+    <string name="please_set_iremote_as_default_first">يرجى تعيين IRemote كمشغل افتراضي أولاً</string>
     <string name="affiliate">شركة تابعة</string>
     <string name="app_not_found">التطبيق غير موجود</string>
     <string name="unable_to_launch_app">تعذر تشغيل التطبيق</string>
@@ -118,11 +118,11 @@
     <string name="swipe_left_app_enabled">انتقاد اليسار التطبيق تمكين</string>
     <string name="swipe_right_app_enabled">انتقاد الحق التطبيق تمكين</string>
     <string name="are_you_using_your_phone_or_is_your_phone_using_you">هل تستخدم هاتفك أم أن هاتفك يستخدمك؟</string>
-    <string name="about_ape">عن Ape</string>
+    <string name="about_iremote">عن IRemote</string>
     <string name="learn_more">يتعلم أكثر</string>
     <string name="did_you_know">هل كنت تعلم؟</string>
     <string name="leave_a_review">ترك التعليق</string>
-    <string name="review_message">Ape هو وسيظل دائمًا مجانيًا تمامًا. ليس لديها إعلانات. لا يجمع أي بيانات. والأهم من ذلك أنه يساعدك على تقليل وقت الشاشة والعيش حياة رقمية أكثر صحة.
+    <string name="review_message">IRemote هو وسيظل دائمًا مجانيًا تمامًا. ليس لديها إعلانات. لا يجمع أي بيانات. والأهم من ذلك أنه يساعدك على تقليل وقت الشاشة والعيش حياة رقمية أكثر صحة.
         \n\nنحن نعتقد أن التحول إلى الحد الأدنى من المشغل هو قرار ممتاز. على الرغم من أننا متحيزون بشكل واضح، إلا أننا نأمل أن تستمتع بالتجربة. لا تتردد في مشاركة أفكارك معنا!</string>
     <string name="screen_time">وقت الشاشة</string>
     <string name="alignment_changed">تم تغيير المحاذاة ✅</string>

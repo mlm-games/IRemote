@@ -12,5 +12,5 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "Ape"
+rootProject.name = "IRemote"
 include(":app")

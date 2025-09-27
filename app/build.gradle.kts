@@ -30,7 +30,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "app.ape"
+        applicationId = "app.iremote"
         minSdk = 24
         targetSdk = 36
         versionCode = 480
@@ -83,10 +83,10 @@ android {
                         else -> base
                     }
                     versionCodeOverride = abiVersionCode
-                    outputFileName = "ape-${variant.versionName}-${abiName}.apk"
+                    outputFileName = "iremote-${variant.versionName}-${abiName}.apk"
                 } else {
                     versionCodeOverride = base + 1
-                    outputFileName = "ape-${variant.versionName}-universal.apk"
+                    outputFileName = "iremote-${variant.versionName}-universal.apk"
                 }
             }
         }
@@ -133,7 +133,7 @@ android {
         kotlinCompilerExtensionVersion = "2.0.0"
     }
 
-    namespace = "app.ape"
+    namespace = "app.iremote"
 
 
     dependenciesInfo {

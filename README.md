@@ -4,9 +4,9 @@
 ![Banner](fastlane/metadata/android/en-US/images/banner.svg)
 
 
-[<img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroidButtonGreyBorder_nofont.png" height="80" alt="Get it at IzzyOnDroid">](https://apt.izzysoft.de/packages/app.ape)
+[<img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroidButtonGreyBorder_nofont.png" height="80" alt="Get it at IzzyOnDroid">](https://apt.izzysoft.de/packages/app.iremote)
 
-[<img src="https://shields.rbtlog.dev/simple/app.ape?style=for-the-badge" alt="RB Status">](https://shields.rbtlog.dev/app.ape)
+[<img src="https://shields.rbtlog.dev/simple/app.iremote?style=for-the-badge" alt="RB Status">](https://shields.rbtlog.dev/app.iremote)
 
 ## Contributing
 Issues and PRs are welcome (would maybe consider having a wiki for common importable configurations)
