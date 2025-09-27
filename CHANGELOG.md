@@ -1,0 +1,11 @@
+# Changelog
+
+## v3.2.7
+
+- Update android.yml
+- add screenshots
+- Add rc6, exporting and importing options
+- update the name
+- update art and descs early
+- first commit
+
