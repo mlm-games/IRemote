@@ -1,3 +1,9 @@
+## v3.2.8
+
+- add mono icon
+- Bump gradle/actions from 4 to 5 in /.github/workflows
+
+
 # Changelog
 
 ## v3.2.7
