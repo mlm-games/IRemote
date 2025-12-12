@@ -1,3 +1,13 @@
+## v3.2.9
+
+- Pronto decode fix (wrong unit)
+- Fix init crash
+- Bump actions/upload-artifact from 4 to 5 in /.github/workflows
+- Bump actions/checkout from 5 to 6 in /.github/workflows
+- add mono icon
+- Bump gradle/actions from 4 to 5 in /.github/workflows
+
+
 ## v3.2.8
 
 - add mono icon
