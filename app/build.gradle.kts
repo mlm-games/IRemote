@@ -8,11 +8,8 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.plugin.compose")
-    id("org.jetbrains.kotlin.plugin.parcelize")
     id("com.google.devtools.ksp")
     id("org.jetbrains.kotlin.plugin.serialization")
-
-
 }
 
 kotlin {
@@ -43,7 +40,7 @@ android {
         vectorDrawables.useSupportLibrary = true
     }
 
-   
+
     val enableApkSplits = (providers.gradleProperty("enableApkSplits").orNull ?: "true").toBoolean()
     val includeUniversalApk = (providers.gradleProperty("includeUniversalApk").orNull ?: "true").toBoolean()
     val targetAbi = providers.gradleProperty("targetAbi").orNull
@@ -124,7 +121,6 @@ android {
     }
 
     buildFeatures {
-        viewBinding = true
         buildConfig = true
         compose = true
     }
@@ -148,68 +144,40 @@ tasks.withType<AbstractArchiveTask>().configureEach {
 }
 
 dependencies {
-
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
-    implementation(libs.androidx.animation)
     ksp(libs.androidx.room.compiler)
-    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
+
     implementation(libs.kotlin.stdlib)
     implementation(libs.core.ktx)
 
-    // Android lifecycle
     implementation(libs.lifecycle.viewmodel.ktx)
-
-    // Work Manager
-    implementation(libs.work.runtime.ktx)
+    implementation(libs.lifecycle.viewmodel.compose)
+    implementation(libs.material)
 
     implementation(libs.androidx.datastore.preferences)
+
     implementation(libs.kotlinx.serialization.json)
-    implementation(libs.gson)
-    implementation(libs.androidx.material.icons.extended)
 
-    implementation(libs.androidx.runtime)
-
-
-    //Material dependencies
-    implementation(libs.material)
-    implementation(libs.material3.android)
-
-    // Compose dependencies
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.tooling.preview)
+    implementation(libs.androidx.runtime)
+    implementation(libs.androidx.animation)
+    implementation(libs.androidx.material.icons.extended)
+    implementation(libs.material3.android)
     implementation(libs.activity.compose)
-    implementation(libs.lifecycle.viewmodel.compose)
     implementation(libs.navigation.compose)
-    implementation(libs.constraintlayout.compose.android)
-    implementation(libs.kotlin.reflect)
-    implementation(libs.androidbrowserhelper)
-    implementation(libs.androidx.datastore.preferences.core)
 
+    // Kotlin reflection (used by SettingsManager)
+    implementation(libs.kotlin.reflect)
+
+    // TV Compose
     implementation(libs.androidx.tv.material)
     implementation(libs.androidx.tv.foundation)
-    implementation(libs.coil.compose)
-    implementation(libs.coil.svg)
 
-    implementation(libs.androidx.documentfile)
-    implementation(libs.androidx.media3.exoplayer)
-    implementation(libs.androidx.media3.ui)
-    implementation(libs.androidx.media3.ui.compose)
-    implementation(libs.androidx.media3.exoplayer.dash)
+    // Local jars (if any)
+    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
-
-
-    implementation(libs.zip4j)
-    implementation(libs.commons.compress)
-    implementation(libs.xz)
-    implementation(libs.zstd.jni)
-
-    // Shizuku
-    implementation(libs.api)
-    implementation(libs.provider)
-
-
-    // Testing
-//    androidTestImplementation(libs.androidx.ui.test.junit4)
+    // Debug tooling
     debugImplementation(libs.androidx.ui.tooling)
 }
