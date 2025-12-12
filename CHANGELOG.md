@@ -1,3 +1,10 @@
+## v3.3.1
+
+- rem unused deps
+- Sort setting impl
+- Add delete button and make fav. button usable for remotes
+
+
 ## v3.2.9
 
 - Pronto decode fix (wrong unit)

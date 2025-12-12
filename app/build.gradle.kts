@@ -30,8 +30,8 @@ android {
         applicationId = "app.iremote"
         minSdk = 24
         targetSdk = 36
-        versionCode = 510
-        versionName = "3.3.0"
+        versionCode = 520
+        versionName = "3.3.1"
 
         androidResources {
             localeFilters += setOf("en", "ar", "de", "es-rES", "es-rUS", "fr", "hr", "hu", "in", "it", "ja", "pl", "pt-rBR", "ru-rRU", "sv", "tr", "uk", "zh")

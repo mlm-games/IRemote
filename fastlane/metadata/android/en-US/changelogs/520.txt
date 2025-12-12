@@ -1,0 +1,3 @@
+- rem unused deps
+- Sort setting impl
+- Add delete button and make fav. button usable for remotes
