@@ -10,23 +10,32 @@ import kotlinx.coroutines.launch
 
 class RemoteListViewModel(
     private val repo: IrRepository,
-    private val settings: SettingsRepository
+    settings: SettingsRepository
 ) : ViewModel() {
     val hasEmitter = MutableStateFlow(repo.hasEmitter())
-    val ranges = repo.capabilityRanges()
-
     private val query = MutableStateFlow("")
     private val all: Flow<List<RemoteProfileEntity>> = repo.remotes()
+    private val sortMode: Flow<Int> = settings.settingsFlow.map { it.defaultSort }
 
     val remotes: StateFlow<List<RemoteProfileEntity>> =
-        combine(all, query) { list, q ->
+        combine(all, query, sortMode) { list, q, sort ->
             val t = q.trim().lowercase()
-            if (t.isBlank()) list else list.filter {
+            var filtered = if (t.isBlank()) list else list.filter {
                 it.name.lowercase().contains(t) ||
                         (it.brand?.lowercase()?.contains(t) == true) ||
                         (it.model?.lowercase()?.contains(t) == true)
             }
+
+            filtered = when (sort) {
+                0 -> filtered.sortedBy { it.name.lowercase() }
+                1 -> filtered.sortedByDescending { it.updatedAt }
+                2 -> filtered.sortedByDescending { it.createdAt }
+                else -> filtered
+            }
+
+            filtered
         }.stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
+
 
     fun setQuery(q: String) { query.value = q }
 

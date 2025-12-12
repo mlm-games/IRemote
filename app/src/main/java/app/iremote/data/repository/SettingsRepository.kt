@@ -46,7 +46,7 @@ class SettingsRepository(private val context: Context) {
 
     val settingsFlow: Flow<AppSettings> = context.ds.data.map { p ->
         AppSettings(
-            defaultSort = p[DEFAULT_SORT] ?: 0,
+            defaultSort = p[DEFAULT_SORT] ?: 1,
             themeMode = p[THEME_MODE] ?: 2,
             hapticFeedback = p[HAPTIC_FEEDBACK] ?: true,
             keepScreenOn = p[KEEP_SCREEN_ON] ?: true

@@ -23,16 +23,15 @@ annotation class Setting(
 enum class SettingCategory { GENERAL, APPEARANCE, ARCHIVES, SYSTEM }
 enum class SettingType { TOGGLE, DROPDOWN, SLIDER, BUTTON }
 
-// Extended with IR‑specific preferences
 data class AppSettings(
     @Setting(
         title = "Default Sort",
         description = "Default sorting for lists",
         category = SettingCategory.GENERAL,
         type = SettingType.DROPDOWN,
-        options = ["Name", "Recently Updated", "Size", "Recently Added"]
+        options = ["Name", "Recently Updated", "Recently Added"]
     )
-    val defaultSort: Int = 0,
+    val defaultSort: Int = 1,
 
     @Setting(
         title = "Theme",
