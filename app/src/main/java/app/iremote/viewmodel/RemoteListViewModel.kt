@@ -33,4 +33,8 @@ class RemoteListViewModel(
     fun toggleFavorite(item: RemoteProfileEntity) = viewModelScope.launch {
         repo.saveRemote(item.copy(favorite = !item.favorite))
     }
+
+    fun deleteRemote(item: RemoteProfileEntity) = viewModelScope.launch {
+        repo.deleteRemote(item)
+    }
 }

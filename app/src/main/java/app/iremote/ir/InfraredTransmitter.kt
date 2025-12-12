@@ -9,7 +9,7 @@ enum class CodeFormat { PRONTO, RAW, NEC, RC5, SAMSUNG, RC6 }
 
 data class EncodedIr(
     val carrierHz: Int,
-    val patternMicros: IntArray
+    @Suppress("ArrayInDataClass") val patternMicros: IntArray
 )
 
 interface InfraredTransmitter {

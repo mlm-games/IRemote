@@ -11,7 +11,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.filled.StarBorder
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -120,20 +121,41 @@ fun RemoteListScreen(
 
             LazyColumn(Modifier.fillMaxSize()) {
                 items(remotes, key = { it.id }) { r ->
+
+                    var showRowMenu by remember { mutableStateOf(false) }
+
                     ListItem(
                         headlineContent = { Text(r.name, maxLines = 1, overflow = TextOverflow.Ellipsis) },
                         supportingContent = {
                             Text(listOfNotNull(r.brand, r.model).joinToString(" • "))
                         },
                         trailingContent = {
-                            val label = if (r.favorite) "★" else "☆"
-                            Text(label, style = MaterialTheme.typography.titleLarge)
+                            Row {
+                                IconButton(onClick = { vm.toggleFavorite(r) }) {
+                                    Icon(
+                                        imageVector = if (r.favorite) Icons.Default.Star else Icons.Default.StarBorder,
+                                        contentDescription = null
+                                    )
+                                }
+                                IconButton(onClick = { showRowMenu = true }) {
+                                    Icon(Icons.Default.MoreVert, contentDescription = "Remote menu")
+                                }
+                                DropdownMenu(expanded = showRowMenu, onDismissRequest = { showRowMenu = false }) {
+                                    DropdownMenuItem(
+                                        text = { Text("Delete") },
+                                        onClick = {
+                                            showRowMenu = false
+                                            vm.deleteRemote(r)
+                                        }
+                                    )
+                                }
+                            }
                         },
                         modifier = Modifier
                             .clickable { onOpenRemote(r.id) }
                             .padding(horizontal = 8.dp)
                     )
-                    Divider()
+                    HorizontalDivider()
                 }
             }
         }
