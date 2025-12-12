@@ -47,20 +47,32 @@ class AndroidInfraredTransmitter(ctx: Context) : InfraredTransmitter {
 }
 
 object Pronto {
-    // Parses "0000 ..." Pronto hex. Supports non‑learned form (0000).
+    // Parses "0000 ..." Pronto hex.
     fun decode(pronto: String): EncodedIr {
-        val parts = pronto.trim().split(Regex("\\s+")).mapNotNull { it.toIntOrNull(16) }
+        val parts = pronto.trim()
+            .split(Regex("\\s+"))
+            .mapNotNull { it.toIntOrNull(16) }
+
         require(parts.isNotEmpty() && parts[0] == 0x0000) { "Only Pronto 0000 supported" }
         require(parts.size >= 4) { "Malformed Pronto" }
 
         val freqWord = parts[1]
-        val oneClock = 1_000_000.0 / (freqWord * 0.241246) // microseconds
-        val carrierHz = (1_000_000.0 / (oneClock * 0.5)).roundToInt()
 
-        val bursts = parts.drop(4)
-        val pattern = bursts.map { (it * oneClock).roundToInt().coerceAtLeast(1) }.toIntArray()
+        // Freq in Hz
+        val carrierHz = (1_000_000.0 / (freqWord * 0.241246)).roundToInt()
+
+        // single Pronto time unit in ms
+        val unitUs = freqWord * 0.241246
+
+        val oncePairs = parts[2]
+        val repeatPairs = parts[3]
+        val totalPairs = (oncePairs + repeatPairs) * 2
+
+        val bursts = parts.drop(4).take(totalPairs)
+        val pattern = bursts
+            .map { (it * unitUs).roundToInt().coerceAtLeast(1) }
+            .toIntArray()
+
         return EncodedIr(carrierHz, pattern)
     }
-
-    // Utility to encode raw pattern to pronto (optional)
 }
