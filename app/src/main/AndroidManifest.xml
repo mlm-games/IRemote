@@ -2,10 +2,16 @@
 <manifest package="app.iremote"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <uses-feature android:name="android.hardware.consumerir" android:required="false"/>
     <uses-permission android:name="android.permission.VIBRATE"/>
 
+    <uses-permission android:name="android.permission.TRANSMIT_IR" />
+
+    <uses-feature
+        android:name="android.hardware.consumerir"
+        android:required="false" /> <!--> Some devices might not advertise the feature<-->
+
     <application
+        android:name=".MainApp"
         android:allowBackup="true"
         android:label="IRemote"
         android:icon="@mipmap/ic_launcher"
