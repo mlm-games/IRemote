@@ -1,12 +1,7 @@
 package app.iremote.ui.screens
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.GridItemSpan
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.grid.*
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
@@ -14,111 +9,132 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import app.iremote.data.repository.AppSettings
-import app.iremote.data.repository.Setting
-import app.iremote.data.repository.SettingCategory
-import app.iremote.data.repository.SettingType
-import app.iremote.data.repository.SettingsManager
+import app.iremote.data.repository.Appearance
+import app.iremote.data.repository.General
+import app.iremote.data.repository.System
 import app.iremote.ui.components.MyScreenScaffold
-import app.iremote.ui.components.SettingsAction
-import app.iremote.ui.components.SettingsItem
-import app.iremote.ui.components.SettingsToggle
-import app.iremote.ui.dialogs.DropdownSettingDialog
-import app.iremote.ui.dialogs.SliderSettingDialog
-
 import app.iremote.viewmodel.SettingsViewModel
+import io.github.mlmgames.settings.core.SettingField
+import io.github.mlmgames.settings.core.types.Button
+import io.github.mlmgames.settings.core.types.Dropdown
+import io.github.mlmgames.settings.core.types.Slider
+import io.github.mlmgames.settings.core.types.Toggle
+import io.github.mlmgames.settings.ui.components.SettingsAction
+import io.github.mlmgames.settings.ui.components.SettingsItem
+import io.github.mlmgames.settings.ui.components.SettingsToggle
+import io.github.mlmgames.settings.ui.dialogs.DropdownSettingDialog
+import io.github.mlmgames.settings.ui.dialogs.SliderSettingDialog
 import java.util.Locale
-import kotlin.reflect.KProperty1
+import kotlin.reflect.KClass
 
 @Composable
 fun SettingsScreen(vm: SettingsViewModel) {
     val settings by vm.settings.collectAsState()
-    val manager = remember { SettingsManager() }
+    val schema = vm.schema
 
     var showDropdown by remember { mutableStateOf(false) }
     var showSlider by remember { mutableStateOf(false) }
-    var currentProp by remember { mutableStateOf<KProperty1<AppSettings, *>?>(null) }
-    var currentAnn by remember { mutableStateOf<Setting?>(null) }
+    var currentField by remember { mutableStateOf<SettingField<AppSettings, *>?>(null) }
 
-    val grouped = remember { manager.getByCategory() }
+    // Group fields by category
+    val grouped = remember(schema) { schema.groupedByCategory() }
+
     val cfg = LocalConfiguration.current
     val gridCells = remember(cfg.screenWidthDp) { GridCells.Adaptive(minSize = 420.dp) }
+
+    // Category display names
+    val categoryNames: Map<KClass<*>, String> = mapOf(
+        General::class to "General",
+        Appearance::class to "Appearance",
+        System::class to "System"
+    )
 
     MyScreenScaffold(title = "Settings") { _ ->
         LazyVerticalGrid(
             columns = gridCells,
             contentPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
             verticalArrangement = Arrangement.spacedBy(6.dp),
-//            horizontalArrangement = Arrangement.spacedBy(12.dp),
             modifier = Modifier.fillMaxSize()
         ) {
-            for (category in SettingCategory.entries) {
-                val itemsForCat = grouped[category] ?: emptyList()
-                if (itemsForCat.isEmpty()) continue
+            // Iterate through ordered categories
+            schema.orderedCategories().forEach { category ->
+                val fieldsInCategory = grouped[category] ?: return@forEach
+                if (fieldsInCategory.isEmpty()) return@forEach
 
+                // Category header
                 item(span = { GridItemSpan(maxLineSpan) }) {
                     Text(
-                        text = category.name.lowercase().replaceFirstChar { it.uppercase() },
+                        text = categoryNames[category] ?: category.simpleName ?: "Unknown",
                         style = MaterialTheme.typography.titleMedium,
                         color = MaterialTheme.colorScheme.primary
                     )
                 }
 
-                items(itemsForCat, key = { it.first.name }) { (prop, ann) ->
-                    val enabled = manager.isEnabled(settings, prop, ann)
+                // Settings items
+                items(fieldsInCategory, key = { it.name }) { field ->
+                    val meta = field.meta ?: return@items  // Skip @Persisted-only fields
+                    val enabled = schema.isEnabled(settings, field)
 
-                    val descriptionOverride = when (prop.name) {
-                        else -> ann.description
-                    }.takeIf { it.isNotBlank() }
-
-                    when (ann.type) {
-                        SettingType.TOGGLE -> {
-                            val value = prop.get(settings) as? Boolean ?: false
+                    when (meta.type) {
+                        Toggle::class -> {
+                            @Suppress("UNCHECKED_CAST")
+                            val boolField = field as SettingField<AppSettings, Boolean>
                             SettingsToggle(
-                                title = ann.title,
-                                description = descriptionOverride,
-                                isChecked = value,
+                                title = meta.title,
+                                description = meta.description.takeIf { it.isNotBlank() },
+                                checked = boolField.get(settings),
                                 enabled = enabled,
-                                onCheckedChange = { vm.updateSetting(prop.name, it) }
+                                onCheckedChange = { vm.updateSetting(field.name, it) }
                             )
                         }
-                        SettingType.DROPDOWN -> {
-                            val idx = prop.get(settings) as? Int ?: 0
-                            val options = ann.options.toList()
+
+                        Dropdown::class -> {
+                            @Suppress("UNCHECKED_CAST")
+                            val intField = field as SettingField<AppSettings, Int>
+                            val idx = intField.get(settings)
                             SettingsItem(
-                                title = ann.title,
-                                subtitle = options.getOrNull(idx) ?: "Unknown",
-                                description = ann.description.takeIf { it.isNotBlank() },
-                                enabled = enabled
-                            ) {
-                                currentProp = prop
-                                currentAnn = ann
-                                showDropdown = true
-                            }
+                                title = meta.title,
+                                subtitle = meta.options.getOrNull(idx) ?: "Unknown",
+                                description = meta.description.takeIf { it.isNotBlank() },
+                                enabled = enabled,
+                                onClick = {
+                                    currentField = field
+                                    showDropdown = true
+                                }
+                            )
                         }
-                        SettingType.SLIDER -> {
-                            val valueText = when (val v = prop.get(settings)) {
-                                is Int -> v.toString()
-                                is Float -> String.format(Locale.getDefault(),"%.1f", v)
+
+                        Slider::class -> {
+                            @Suppress("UNCHECKED_CAST")
+                            val floatField = field as? SettingField<AppSettings, Float>
+                            @Suppress("UNCHECKED_CAST")
+                            val intField = field as? SettingField<AppSettings, Int>
+
+                            val valueText = when {
+                                floatField != null -> String.format(Locale.getDefault(), "%.1f", floatField.get(settings))
+                                intField != null -> intField.get(settings).toString()
                                 else -> ""
                             }
+
                             SettingsItem(
-                                title = ann.title,
+                                title = meta.title,
                                 subtitle = valueText,
-                                description = ann.description.takeIf { it.isNotBlank() },
-                                enabled = enabled
-                            ) {
-                                currentProp = prop
-                                currentAnn = ann
-                                showSlider = true
-                            }
+                                description = meta.description.takeIf { it.isNotBlank() },
+                                enabled = enabled,
+                                onClick = {
+                                    currentField = field
+                                    showSlider = true
+                                }
+                            )
                         }
-                        SettingType.BUTTON -> {
+
+                        Button::class -> {
                             SettingsAction(
-                                title = ann.title,
-                                description = ann.description.takeIf { it.isNotBlank() },
+                                title = meta.title,
+                                description = meta.description.takeIf { it.isNotBlank() },
                                 buttonText = "Run",
                                 enabled = enabled,
-                                onClick = { vm.performAction(prop.name) }
+                                onClick = { vm.performAction(field.name) }
                             )
                         }
                     }
@@ -127,41 +143,51 @@ fun SettingsScreen(vm: SettingsViewModel) {
         }
     }
 
-    if (showDropdown && currentProp != null && currentAnn != null) {
-        val prop = currentProp!!
-        val ann = currentAnn!!
-        val idx = prop.get(settings) as? Int ?: 0
+    // Dropdown Dialog
+    val cf = currentField
+    if (showDropdown && cf?.meta != null) {
+        val meta = cf.meta!!
+        @Suppress("UNCHECKED_CAST")
+        val intField = cf as SettingField<AppSettings, Int>
+
         DropdownSettingDialog(
-            title = ann.title,
-            options = ann.options.toList(),
-            selectedIndex = idx,
+            title = meta.title,
+            options = meta.options,
+            selectedIndex = intField.get(settings),
             onDismiss = { showDropdown = false },
             onOptionSelected = { i ->
-                vm.updateSetting(prop.name, i)
+                vm.updateSetting(cf.name, i)
                 showDropdown = false
             }
         )
     }
 
-    if (showSlider && currentProp != null && currentAnn != null) {
-        val prop = currentProp!!
-        val ann = currentAnn!!
-        val cur = when (val v = prop.get(settings)) {
-            is Int -> v.toFloat()
-            is Float -> v
+    // Slider Dialog
+    if (showSlider && cf?.meta != null) {
+        val meta = cf.meta!!
+
+        @Suppress("UNCHECKED_CAST")
+        val floatField = cf as? SettingField<AppSettings, Float>
+        @Suppress("UNCHECKED_CAST")
+        val intField = cf as? SettingField<AppSettings, Int>
+
+        val currentValue = when {
+            floatField != null -> floatField.get(settings)
+            intField != null -> intField.get(settings).toFloat()
             else -> 0f
         }
+
         SliderSettingDialog(
-            title = ann.title,
-            currentValue = cur,
-            min = ann.min,
-            max = ann.max,
-            step = ann.step,
+            title = meta.title,
+            currentValue = currentValue,
+            min = meta.min,
+            max = meta.max,
+            step = meta.step,
             onDismiss = { showSlider = false },
             onValueSelected = { value ->
-                when (prop.returnType.classifier) {
-                    Int::class -> vm.updateSetting(prop.name, value.toInt())
-                    Float::class -> vm.updateSetting(prop.name, value)
+                when {
+                    intField != null -> vm.updateSetting(cf.name, value.toInt())
+                    floatField != null -> vm.updateSetting(cf.name, value)
                 }
                 showSlider = false
             }

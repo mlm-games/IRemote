@@ -2,20 +2,22 @@ package app.iremote.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import app.iremote.data.repository.SettingsRepository
+import app.iremote.AppGraph.settings
+import app.iremote.data.repository.AppSettings
 import app.iremote.ir.data.IrRepository
 import app.iremote.ir.data.RemoteProfileEntity
+import io.github.mlmgames.settings.core.SettingsRepository
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class RemoteListViewModel(
     private val repo: IrRepository,
-    settings: SettingsRepository
+    private val settingsRepo: SettingsRepository<AppSettings>
 ) : ViewModel() {
     val hasEmitter = MutableStateFlow(repo.hasEmitter())
     private val query = MutableStateFlow("")
     private val all: Flow<List<RemoteProfileEntity>> = repo.remotes()
-    private val sortMode: Flow<Int> = settings.settingsFlow.map { it.defaultSort }
+    private val sortMode: Flow<Int> = settings.flow.map { it.defaultSort }
 
     val remotes: StateFlow<List<RemoteProfileEntity>> =
         combine(all, query, sortMode) { list, q, sort ->

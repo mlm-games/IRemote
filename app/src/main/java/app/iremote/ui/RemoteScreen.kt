@@ -31,7 +31,7 @@ import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.unit.dp
 import app.iremote.AppGraph
 import app.iremote.data.repository.AppSettings
-import app.iremote.ir.viewmodel.RemoteViewModel
+import app.iremote.viewmodel.RemoteViewModel
 import app.iremote.ui.components.AppTopBar
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -43,7 +43,7 @@ fun RemoteScreen(
 ) {
     val bundle by vm.remote.collectAsState()
     val haptics = LocalHapticFeedback.current
-    val settings by AppGraph.settings.settingsFlow.collectAsState(initial = AppSettings())
+    val settings by AppGraph.settings.flow.collectAsState(initial = AppSettings())
 
     // Keep screen on while in a remote if user enabled it
     KeepScreenOn(enabled = settings.keepScreenOn)

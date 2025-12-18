@@ -1,83 +1,54 @@
 package app.iremote.data.repository
 
-import kotlin.annotation.AnnotationRetention.RUNTIME
-import kotlin.annotation.AnnotationTarget.PROPERTY
-import kotlin.reflect.KProperty1
-import kotlin.reflect.full.findAnnotation
-import kotlin.reflect.full.memberProperties
+import io.github.mlmgames.settings.core.annotations.CategoryDefinition
+import io.github.mlmgames.settings.core.annotations.Persisted
+import io.github.mlmgames.settings.core.annotations.Setting
+import io.github.mlmgames.settings.core.types.Dropdown
+import io.github.mlmgames.settings.core.types.Toggle
 
-@Target(PROPERTY)
-@Retention(RUNTIME)
-annotation class Setting(
-    val title: String,
-    val description: String = "",
-    val category: SettingCategory,
-    val type: SettingType,
-    val dependsOn: String = "",
-    val min: Float = 0f,
-    val max: Float = 100f,
-    val step: Float = 1f,
-    val options: Array<String> = []
-)
+@CategoryDefinition(order = 0)
+object General
 
-enum class SettingCategory { GENERAL, APPEARANCE, ARCHIVES, SYSTEM }
-enum class SettingType { TOGGLE, DROPDOWN, SLIDER, BUTTON }
+@CategoryDefinition(order = 1)
+object Appearance
+
+@CategoryDefinition(order = 2)
+object System
 
 data class AppSettings(
     @Setting(
         title = "Default Sort",
         description = "Default sorting for lists",
-        category = SettingCategory.GENERAL,
-        type = SettingType.DROPDOWN,
+        category = General::class,
+        type = Dropdown::class,
         options = ["Name", "Recently Updated", "Recently Added"]
     )
     val defaultSort: Int = 1,
 
     @Setting(
         title = "Theme",
-        category = SettingCategory.APPEARANCE,
-        type = SettingType.DROPDOWN,
+        category = Appearance::class,
+        type = Dropdown::class,
         options = ["System", "Light", "Dark"]
     )
     val themeMode: Int = 2,
 
+    @Persisted
     val useAuroraTheme: Boolean = true,
 
-    // IR specific
     @Setting(
         title = "Haptic feedback",
         description = "Vibrate lightly on key press",
-        category = SettingCategory.GENERAL,
-        type = SettingType.TOGGLE
+        category = General::class,
+        type = Toggle::class
     )
     val hapticFeedback: Boolean = true,
 
     @Setting(
         title = "Keep screen on",
         description = "Prevent the screen from sleeping while a remote is open",
-        category = SettingCategory.GENERAL,
-        type = SettingType.TOGGLE
+        category = General::class,
+        type = Toggle::class
     )
     val keepScreenOn: Boolean = true
 )
-
-class SettingsManager {
-    fun getAll(): List<Pair<KProperty1<AppSettings, *>, Setting>> {
-        return AppSettings::class.memberProperties.mapNotNull { p ->
-            val ann = p.findAnnotation<Setting>()
-            if (ann != null) p to ann else null
-        }
-    }
-    fun getByCategory(): Map<SettingCategory, List<Pair<KProperty1<AppSettings, *>, Setting>>> =
-        getAll().groupBy { it.second.category }
-
-    fun isEnabled(settings: AppSettings, property: KProperty1<AppSettings, *>, annotation: Setting): Boolean {
-        val depends = annotation.dependsOn
-        if (depends.isBlank()) return true
-        val depProp = AppSettings::class.memberProperties.find { it.name == depends }
-        return if (depProp != null) {
-            val v = depProp.get(settings)
-            (v as? Boolean) ?: true
-        } else true
-    }
-}

@@ -1,18 +1,19 @@
-package app.iremote.ir.viewmodel
+package app.iremote.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import app.iremote.data.repository.SettingsRepository
+import app.iremote.data.repository.AppSettings
 import app.iremote.ir.data.IrRepository
 import app.iremote.ir.data.RemoteKeyEntity
 import app.iremote.ir.data.RemoteWithKeys
+import io.github.mlmgames.settings.core.SettingsRepository
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 
 class RemoteViewModel(
-    private val remoteId: Long,
+    remoteId: Long,
     private val repo: IrRepository,
-    private val settings: SettingsRepository
+    private val settingsRepo: SettingsRepository<AppSettings>
 ) : ViewModel() {
 
     val remote: StateFlow<RemoteWithKeys?> =

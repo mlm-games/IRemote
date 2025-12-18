@@ -23,7 +23,7 @@ import app.iremote.ui.EditRemoteScreen
 import app.iremote.ui.RemoteListScreen
 import app.iremote.ui.RemoteScreen
 import app.iremote.viewmodel.RemoteListViewModel
-import app.iremote.ir.viewmodel.RemoteViewModel
+import app.iremote.viewmodel.RemoteViewModel
 import app.iremote.ui.screens.SettingsScreen
 import app.iremote.ui.theme.MainTheme
 import app.iremote.viewmodel.SettingsViewModel
@@ -37,7 +37,7 @@ class MainActivity : ComponentActivity() {
         }
 
     private val settingsVM: SettingsViewModel by viewModels {
-        vm { SettingsViewModel(AppGraph.settings) }
+        vm { SettingsViewModel(application) }
     }
 
     private val listVM: RemoteListViewModel by viewModels {
@@ -49,7 +49,7 @@ class MainActivity : ComponentActivity() {
         AppGraph.init(applicationContext)
 
         setContent {
-            val settings by AppGraph.settings.settingsFlow.collectAsState(initial = AppSettings())
+            val settings by AppGraph.settings.flow.collectAsState(initial = AppSettings())
             val dark = when (settings.themeMode) {
                 0 -> isSystemInDarkTheme()
                 1 -> false
