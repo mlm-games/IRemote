@@ -2,6 +2,7 @@ package app.iremote
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -12,24 +13,17 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavType
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
+import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
+import androidx.navigation3.runtime.rememberNavBackStack
+import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import app.iremote.data.repository.AppSettings
-import app.iremote.ui.EditRemoteScreen
-import app.iremote.ui.RemoteListScreen
-import app.iremote.ui.RemoteScreen
-import app.iremote.viewmodel.RemoteListViewModel
-import app.iremote.viewmodel.RemoteViewModel
-import app.iremote.ui.screens.SettingsScreen
 import app.iremote.ui.theme.MainTheme
+import app.iremote.ui.util.NavGraph
+import app.iremote.ui.util.Screen
+import app.iremote.viewmodel.RemoteListViewModel
 import app.iremote.viewmodel.SettingsViewModel
 
 class MainActivity : ComponentActivity() {
-
     private inline fun <reified T : ViewModel> vm(crossinline create: () -> T) =
         object : ViewModelProvider.Factory {
             @Suppress("UNCHECKED_CAST")
@@ -58,51 +52,23 @@ class MainActivity : ComponentActivity() {
 
             MainTheme(darkTheme = dark, useAuroraTheme = settings.useAuroraTheme) {
                 Surface(Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-                    val nav = rememberNavController()
-                    NavHost(navController = nav, startDestination = "home") {
-                        composable("home") {
-                            RemoteListScreen(
-                                vm = listVM,
-                                onOpenSettings = { nav.navigate("settings") },
-                                onOpenRemote = { id -> nav.navigate("remote/$id") },
-                                onCreateRemote = { nav.navigate("edit/-1") }
-                            )
-                        }
-                        composable(
-                            "remote/{id}",
-                            arguments = listOf(navArgument("id") { type = NavType.LongType })
-                        ) { backStack ->
-                            val id = backStack.arguments?.getLong("id") ?: -1L
-                            val remoteVM: RemoteViewModel = viewModelFactoryRemote(id)
-                            RemoteScreen(
-                                vm = remoteVM,
-                                onBack = { nav.popBackStack() },
-                                onEdit = { nav.navigate("edit/$id") }
-                            )
-                        }
-                        composable(
-                            "edit/{id}",
-                            arguments = listOf(navArgument("id") { type = NavType.LongType })
-                        ) { backStack ->
-                            val id = backStack.arguments?.getLong("id") ?: -1L
-                            EditRemoteScreen(
-                                repo = AppGraph.irRepo,
-                                remoteId = id,
-                                onClose = { nav.popBackStack() }
-                            )
-                        }
-                        composable("settings") {
-                            SettingsScreen(vm = settingsVM)
-                        }
+                    val backStack = rememberNavBackStack(Screen.Home)
+                    BackHandler(enabled = backStack.size > 1) {
+                        backStack.removeAt(backStack.lastIndex)
                     }
+
+                    NavGraph(
+                        backStack = backStack,
+                        decorators = listOf(
+                            rememberSaveableStateHolderNavEntryDecorator(),
+                            rememberViewModelStoreNavEntryDecorator()
+                        )
+                        ,
+                        listVM = listVM,
+                        settingsVM = settingsVM
+                    )
                 }
             }
         }
-    }
-
-    @Composable
-    private fun viewModelFactoryRemote(remoteId: Long): RemoteViewModel {
-        val factory = vm { RemoteViewModel(remoteId, AppGraph.irRepo, AppGraph.settings) }
-        return viewModel(factory = factory)
     }
 }

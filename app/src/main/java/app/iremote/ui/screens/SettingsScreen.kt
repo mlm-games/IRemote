@@ -2,7 +2,10 @@ package app.iremote.ui.screens
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.*
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -12,7 +15,7 @@ import app.iremote.data.repository.AppSettings
 import app.iremote.data.repository.Appearance
 import app.iremote.data.repository.General
 import app.iremote.data.repository.System
-import app.iremote.ui.components.MyScreenScaffold
+import app.iremote.ui.components.AppTopBar
 import app.iremote.viewmodel.SettingsViewModel
 import io.github.mlmgames.settings.core.SettingField
 import io.github.mlmgames.settings.core.types.Button
@@ -192,5 +195,47 @@ fun SettingsScreen(vm: SettingsViewModel) {
                 showSlider = false
             }
         )
+    }
+}
+
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun MyScreenScaffold(
+    title: String,
+    actions: @Composable (RowScope.() -> Unit) = {},
+    content: @Composable (PaddingValues) -> Unit
+) {
+    Scaffold(
+        topBar = {
+            Surface(
+                modifier = Modifier.fillMaxWidth(),
+                color = MaterialTheme.colorScheme.surface,
+                tonalElevation = 3.dp
+            ) {
+                AppTopBar(
+                    title = {
+                        Text(
+                            title,
+                            color = MaterialTheme.colorScheme.onSurface
+                        )
+                    },
+//                    colors = TopAppBarDefaults.topAppBarColors(
+//                        containerColor = MaterialTheme.colorScheme.surface,
+//                        titleContentColor = MaterialTheme.colorScheme.onSurface
+//                    ),
+                    actions = actions
+                )
+            }
+        }
+    ) { paddingValues ->
+        Surface(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues),
+            color = MaterialTheme.colorScheme.background
+        ) {
+            content(paddingValues)
+        }
     }
 }
