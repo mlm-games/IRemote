@@ -168,8 +168,6 @@ dependencies {
     implementation(libs.activity.compose)
     implementation(libs.navigation.compose)
 
-    // Kotlin reflection (used by SettingsManager)
-    implementation(libs.kotlin.reflect)
     implementation(libs.kmp.settings.core)
 
     implementation(libs.kmp.settings.ui.compose)

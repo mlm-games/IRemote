@@ -1,10 +1,9 @@
 [versions]
-activityCompose = "1.12.1"
+activityCompose = "1.12.2"
 coreKtx = "1.17.0"
 datastorePreferences = "1.2.0"
 androidGradlePlugin = "8.13.2"
 kmpSettingsCore = "0.2.0"
-kotlinReflect = "2.2.21"
 kotlinStdlib = "2.3.0"
 kotlinxSerializationJson = "1.9.0"
 lifecycleViewmodelCompose = "2.10.0"
@@ -36,7 +35,6 @@ core-ktx = { module = "androidx.core:core-ktx", version.ref = "coreKtx" }
 kmp-settings-core = { module = "io.github.mlm-games:kmp-settings-core", version.ref = "kmpSettingsCore" }
 kmp-settings-ksp = { module = "io.github.mlm-games:kmp-settings-ksp", version.ref = "kmpSettingsCore" }
 kmp-settings-ui-compose = { module = "io.github.mlm-games:kmp-settings-ui-compose", version.ref = "kmpSettingsCore" }
-kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlinReflect" }
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlinStdlib" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleViewmodelCompose" }
