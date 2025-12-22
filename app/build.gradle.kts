@@ -14,7 +14,7 @@ plugins {
 
 kotlin {
     compilerOptions {
-        jvmTarget = JvmTarget.fromTarget("17")
+        jvmTarget.set(JvmTarget.JVM_17)
     }
 }
 
