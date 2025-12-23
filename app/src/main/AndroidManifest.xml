@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="app.iremote"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest package="app.iremote" xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.VIBRATE"/>
 
     <uses-permission android:name="android.permission.TRANSMIT_IR" />
 
-    <uses-feature android:name="android.hardware.consumerir" android:required="false" /> <!--> Some devices might not advertise the feature or can be used for managing remotes... -->
+    <uses-feature android:name="android.hardware.consumerir" android:required="false" /> <!-- Some devices might not advertise the feature or can be used for managing remotes -->
 
     <application
         android:name=".MainApp"
