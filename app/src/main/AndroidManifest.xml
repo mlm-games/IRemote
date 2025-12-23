@@ -6,9 +6,7 @@
 
     <uses-permission android:name="android.permission.TRANSMIT_IR" />
 
-    <uses-feature
-        android:name="android.hardware.consumerir"
-        android:required="false" /> <!--> Some devices might not advertise the feature<-->
+    <uses-feature android:name="android.hardware.consumerir" android:required="false" /> <!--> Some devices might not advertise the feature or can be used for managing remotes... -->
 
     <application
         android:name=".MainApp"
@@ -27,7 +25,6 @@
             </intent-filter>
         </activity>
 
-        <!-- Optional FileProvider (kept if you reuse any sharing or import/export) -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"
