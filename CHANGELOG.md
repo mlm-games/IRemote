@@ -1,3 +1,8 @@
+## v3.4.4
+
+- Remove all spaces and test for repro
+
+
 ## v3.4.3
 
 - Fix fdroid yml build for repro
