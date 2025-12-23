@@ -1,0 +1,11 @@
+- bump ver
+- rm extra step
+- add my gradle plugin
+- For repro (fdroid condenses them apparently)
+- bump kmp-settings ver
+- Update JVM target to use set method
+- Use nav 3
+- Remove all old rules (and do not use AutoSettingsScreen, until i update it to look like CCLauncher's settings screen...)
+- Migrate to my settings library
+- bump all vers and remove unused ones
+- Bump actions/upload-artifact from 5 to 6 in /.github/workflows
