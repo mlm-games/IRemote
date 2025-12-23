@@ -1,6 +1,5 @@
 @file:Suppress("UnstableApiUsage")
 
-import com.android.build.gradle.internal.api.ApkVariantOutputImpl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 
@@ -10,6 +9,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.ksp)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.apk.dist)
 }
 
 kotlin {
@@ -57,35 +57,6 @@ android {
                 }
             }
             isUniversalApk = includeUniversalApk && enableApkSplits
-        }
-    }
-
-    applicationVariants.all {
-        val buildingApk = gradle.startParameter.taskNames.any { it.contains("assemble", ignoreCase = true) }
-        if (!buildingApk) return@all
-
-        val variant = this
-        outputs.all {
-            if (this is ApkVariantOutputImpl) {
-                val abiName = filters.find { it.filterType == "ABI" }?.identifier
-                val base = variant.versionCode
-
-                if (abiName != null) {
-                    // Split APKs get stable per-ABI version codes and names
-                    val abiVersionCode = when (abiName) {
-                        "x86" -> base - 3
-                        "x86_64" -> base - 2
-                        "armeabi-v7a" -> base - 1
-                        "arm64-v8a" -> base
-                        else -> base
-                    }
-                    versionCodeOverride = abiVersionCode
-                    outputFileName = "iremote-${variant.versionName}-${abiName}.apk"
-                } else {
-                    versionCodeOverride = base + 1
-                    outputFileName = "iremote-${variant.versionName}-universal.apk"
-                }
-            }
         }
     }
 
