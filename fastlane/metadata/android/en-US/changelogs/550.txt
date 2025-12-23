@@ -1,0 +1,2 @@
+- Fix fdroid yml build for repro
+- Update changelog for migration and version bumps

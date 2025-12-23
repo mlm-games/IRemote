@@ -1,3 +1,9 @@
+## v3.4.3
+
+- Fix fdroid yml build for repro
+- Update changelog for migration and version bumps
+
+
 ## v3.4.2
 
 - update apkDist
