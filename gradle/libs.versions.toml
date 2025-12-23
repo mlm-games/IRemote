@@ -20,7 +20,7 @@ kotlin-ksp = "2.3.0"
 material3Android = "1.4.0"
 animation = "1.10.0"
 navigation3Ui = "1.0.0"
-apkDist = "0.4.2"
+apkDist = "0.4.3"
 
 [libraries]
 activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activityCompose" }
