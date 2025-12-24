@@ -1,1 +1,6 @@
 An IR remote app inspired by the now archived IR-Remote (by divested group)
+
+Features:
+
+- Export or Import Remotes via JSON
+- Supports many formats (NEC, PRONTO, RC5, RC6, Samsung or Raw)
