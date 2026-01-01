@@ -1,3 +1,8 @@
+## v3.4.5
+
+- Expand desc, and scale down the icon
+
+
 ## v3.4.4
 
 - Remove all spaces and test for repro
