@@ -113,10 +113,10 @@
     <string name="app_not_found">App non trovata</string>
     <string name="unable_to_launch_app">Impossibile avviare l\'app</string>
     <string name="search_for_Launcher_or_home_app">Cerca app per home o launcher</string>
-    <string name="swipe_left_app_enabled">Attivata opzione dell'\app per quando si trascina verso sinistra</string>
-    <string name="swipe_right_app_enabled">Attivata opzione dell'\app per quando si trascina verso destra</string>
-    <string name="swipe_left_app_disabled">Disattivata opzione dell'\app per quando si trascina verso sinistra</string>
-    <string name="swipe_right_app_disabled">Disattivata opzione dell'\app per quando si trascina verso destra</string>
+    <string name="swipe_left_app_enabled">Attivata opzione dell\'app per quando si trascina verso sinistra</string>
+    <string name="swipe_right_app_enabled">Attivata opzione dell\'app per quando si trascina verso destra</string>
+    <string name="swipe_left_app_disabled">Disattivata opzione dell\'app per quando si trascina verso sinistra</string>
+    <string name="swipe_right_app_disabled">Disattivata opzione dell\'app per quando si trascina verso destra</string>
     <string name="change_to_your_preferred_wallpiremoter_in_settings">Cambia il tuo sfondo preferito nelle impostazioni</string>
     <string name="iremote_is_not_default_launcher">IRemote non è predefinito. L\'aggiornamento dello sfondo fallirà.</string>
     <string name="long_press_to_enable">Premi a lungo per attivare</string>
