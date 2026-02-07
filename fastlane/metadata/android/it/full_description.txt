@@ -1,0 +1,5 @@
+Un telecomando ispirato dal telecomando del gruppo Divested, ora archiviato.
+
+Funzioni:
+- Esporta o importa telecomandi in JSON
+- Supporta molti formati (NEC, PRONTO, RC5, RC6, Samsung o base)
