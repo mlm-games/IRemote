@@ -1,3 +1,16 @@
+## v3.5.1
+
+- bump jvm version to 21
+- bump few more vers
+- bump to agp 9
+- Create title.txt
+- Create full_description.txt
+- Create short_description.txt
+- Update strings.xml
+- Update strings.xml
+- Expand desc, and scale down the icon
+
+
 ## v3.4.5
 
 - Expand desc, and scale down the icon
