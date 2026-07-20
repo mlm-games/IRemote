@@ -18,7 +18,7 @@ tvMaterial = "1.1.0"
 kotlin = "2.4.10"
 kotlin-ksp = "2.3.10"
 material3Android = "1.4.0"
-animation = "1.10.2"
+animation = "1.11.4"
 navigation3Ui = "1.1.4"
 apkDist = "0.5.2"
 
