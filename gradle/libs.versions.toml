@@ -1,7 +1,7 @@
 [versions]
 activityCompose = "1.12.3"
 coreKtx = "1.17.0"
-datastorePreferences = "1.2.0"
+datastorePreferences = "1.2.1"
 androidGradlePlugin = "9.0.0"
 kmpSettingsCore = "0.5.0"
 kotlinStdlib = "2.3.10"
