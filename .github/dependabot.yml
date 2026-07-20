@@ -6,7 +6,6 @@ updates:
     schedule:
       interval: "daily"
     open-pull-requests-limit: 10
-    target-branch: "kotlin"  # default branch name
     labels:
       - "dependencies"
       - "android"
@@ -15,7 +14,7 @@ updates:
     
   # Configure updates for GitHub Actions
   - package-ecosystem: "github-actions"
-    directory: ".github/workflows"
+    directory: "/"
     schedule:
       interval: "weekly"
     open-pull-requests-limit: 10
