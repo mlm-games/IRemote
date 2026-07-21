@@ -1,1 +1,6 @@
-<resources></resources>
+<resources>
+    <string name="accessibility_service_description">需要辅助功能权限才能启用双击锁定。</string>
+    <string name="settings_category_general">通用</string>
+    <string name="settings_category_appearance">外观</string>
+    <string name="settings_category_system">系统</string>
+</resources>

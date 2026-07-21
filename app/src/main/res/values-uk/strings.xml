@@ -1,1 +1,6 @@
-<resources></resources>
+<resources>
+    <string name="accessibility_service_description">Дозвіл спеціальних можливостей потрібен для ввімкнення блокування подвійним дотиком.</string>
+    <string name="settings_category_general">Загальні</string>
+    <string name="settings_category_appearance">Зовнішній вигляд</string>
+    <string name="settings_category_system">Система</string>
+</resources>

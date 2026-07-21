@@ -1,1 +1,6 @@
-<resources></resources>
+<resources>
+    <string name="accessibility_service_description">تم منح الإذن لإمكانية الوصول لتمكين النقر المزدوج للقفل. لن يتم مشاركة أي بيانات.</string>
+    <string name="settings_category_general">عام</string>
+    <string name="settings_category_appearance">المظهر</string>
+    <string name="settings_category_system">النظام</string>
+</resources>

@@ -1,1 +1,6 @@
-<resources></resources>
+<resources>
+    <string name="accessibility_service_description">A permissão de acessibilidade é necessária para ativar o toque duplo para bloquear.</string>
+    <string name="settings_category_general">Geral</string>
+    <string name="settings_category_appearance">Aparência</string>
+    <string name="settings_category_system">Sistema</string>
+</resources>

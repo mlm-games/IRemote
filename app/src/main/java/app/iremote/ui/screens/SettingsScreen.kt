@@ -114,7 +114,7 @@ fun SettingsScreen(vm: SettingsViewModel) {
                             val intField = field as? SettingField<AppSettings, Int>
 
                             val valueText = when {
-                                floatField != null -> String.format(Locale.getDefault(), "%.1f", floatField.get(settings))
+                                floatField != null -> @Suppress("NonObservableLocale") String.format(Locale.getDefault(), "%.1f", floatField.get(settings))
                                 intField != null -> intField.get(settings).toString()
                                 else -> ""
                             }
