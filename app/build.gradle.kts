@@ -10,6 +10,14 @@ plugins {
 
 kotlin {
     jvmToolchain(21)
+    compilerOptions {
+        optIn.set(listOf(
+            "androidx.compose.material3.ExperimentalMaterial3Api",
+            "androidx.compose.material3.ExperimentalMaterial3ExpressiveApi",
+            "androidx.compose.foundation.ExperimentalFoundationApi",
+            "androidx.compose.foundation.layout.ExperimentalLayoutApi"
+        ))
+    }
 }
 
 android {
@@ -100,6 +108,8 @@ tasks.withType<AbstractArchiveTask>().configureEach {
 }
 
 dependencies {
+    implementation(platform(libs.androidx.compose.bom))
+
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
     implementation(libs.androidx.navigation3.ui)
@@ -123,7 +133,7 @@ dependencies {
     implementation(libs.androidx.runtime)
     implementation(libs.androidx.animation)
     implementation(libs.androidx.material.icons.extended)
-    implementation(libs.material3.android)
+    implementation(libs.material3)
     implementation(libs.activity.compose)
     implementation(libs.navigation.compose)
 
@@ -131,10 +141,6 @@ dependencies {
 
     implementation(libs.kmp.settings.ui.compose)
     ksp(libs.kmp.settings.ksp)
-
-    // TV Compose
-    implementation(libs.androidx.tv.material)
-    implementation(libs.androidx.tv.foundation)
 
     // Local jars (if any)
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
